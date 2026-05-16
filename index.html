@@ -17,6 +17,7 @@
     justify-content: center;
     gap: 36px;
     padding: 60px 24px;
+    overflow-x: hidden;
   }
 
   .scene {
@@ -380,7 +381,7 @@
     const scene = document.querySelector('.scene');
     const cardW = 900;
     const cardH = 500;
-    const vw = Math.min(window.innerWidth - 24, cardW);
+    const vw = Math.min(document.documentElement.clientWidth - 24, cardW);
     if (vw < cardW) {
       const scale = vw / cardW;
       scene.style.transform = `scale(${scale})`;
