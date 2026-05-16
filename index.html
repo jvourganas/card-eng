@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. John Vourganas — Business Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Barlow:wght@300;400&family=Barlow+Condensed:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #020D17;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    padding: 60px 24px;
+  }
+
+  .scene {
+    width: 900px;
+    height: 500px;
+    perspective: 1800px;
+    cursor: pointer;
+  }
+
+  .card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s cubic-bezier(0.76, 0, 0.18, 1);
+    border-radius: 12px;
+  }
+
+  .scene:hover .card,
+  .scene.flipped .card { transform: rotateY(180deg); }
+
+  .face {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+  }
+
+  /* ═══════════ FRONT ═══════════ */
+  .front {
+    background: #061524;
+    background-image:
+      radial-gradient(ellipse 65% 70% at 5% 55%,  rgba(0,120,180,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 95% 10%,  rgba(0,100,160,0.04) 0%, transparent 55%);
+    box-shadow:
+      0 0 0 1px rgba(0,150,200,0.13),
+      0 40px 100px rgba(0,0,0,0.85);
+  }
+
+  .front-line {
+    position: absolute;
+    top: 0; left: 52px; right: 52px;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(0,174,239,0.55) 25%,
+      rgba(0,174,239,0.55) 75%,
+      transparent);
+  }
+
+  .v-mark {
+    position: absolute;
+    top: 40px;
+    left: 52px;
+  }
+  .v-mark svg { width: 26px; height: 20px; }
+
+  /* ── Αριστερό μπλοκ ── */
+  .left-block {
+    position: absolute;
+    left: 56px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+  }
+
+  .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 42px;
+    letter-spacing: 0.01em;
+    color: #EEF4FF;
+    line-height: 1;
+    margin-bottom: 24px;
+    white-space: nowrap;
+  }
+
+  .roles {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-left: 1px solid rgba(0,174,239,0.22);
+    padding-left: 16px;
+    width: fit-content;
+  }
+
+  .dr {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 16px;
+    letter-spacing: 0.12em;
+    color: rgba(0,174,239,0.6);
+    margin-bottom: 4px;
+  }
+
+  .role {
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 7px 0;
+    white-space: nowrap;
+  }
+
+  .role-1 {
+    font-weight: 500;
+    font-size: 12.5px;
+    color: rgba(0,174,239,0.9);
+    border-bottom: 1px solid rgba(0,174,239,0.1);
+  }
+
+  .role-2 {
+    font-weight: 400;
+    font-size: 11.5px;
+    color: rgba(0,174,239,0.6);
+    border-bottom: 1px solid rgba(0,174,239,0.1);
+  }
+
+  .role-3 {
+    font-weight: 300;
+    font-size: 11px;
+    color: rgba(0,174,239,0.38);
+  }
+
+  /* ── Διαχωριστής ── */
+  .vdivider {
+    position: absolute;
+    left: 518px;
+    top: 60px;
+    bottom: 60px;
+    width: 1px;
+    background: linear-gradient(180deg,
+      transparent,
+      rgba(0,150,200,0.2) 20%,
+      rgba(0,150,200,0.2) 80%,
+      transparent);
+  }
+
+  /* ── Δεξί μπλοκ — Επικοινωνία ── */
+  .right-block {
+    position: absolute;
+    left: 546px;
+    right: 52px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .contact-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300;
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: rgba(0,174,239,0.32);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .contact-item {
+    margin-bottom: 12px;
+  }
+
+  .contact-type {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: rgba(0,174,239,0.38);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .contact-value {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: rgba(238,244,255,0.72);
+  }
+
+  .phones {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+  }
+
+  .phones span {
+    display: block;
+    color: rgba(238,244,255,0.65);
+  }
+
+  /* Netrity — πολύ διακριτικά, κάτω δεξιά */
+  .netrity {
+    position: absolute;
+    bottom: 34px;
+    right: 52px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: rgba(0,174,239,0.2);
+    text-transform: uppercase;
+  }
+
+  /* ═══════════ BACK ═══════════ */
+  .back {
+    transform: rotateY(180deg);
+    background: #071828;
+    background-image:
+      radial-gradient(ellipse 60% 60% at 50% 50%,
+        rgba(0,120,180,0.08) 0%, transparent 65%);
+    box-shadow:
+      0 0 0 1px rgba(0,150,200,0.1),
+      0 40px 100px rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .back-line {
+    position: absolute;
+    bottom: 0; left: 52px; right: 52px;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(0,174,239,0.45) 30%,
+      rgba(0,174,239,0.45) 70%,
+      transparent);
+  }
+
+  .corner { position: absolute; width: 18px; height: 18px; }
+  .c-tl { top: 20px; left: 20px; border-top: 1px solid rgba(0,174,239,0.18); border-left: 1px solid rgba(0,174,239,0.18); }
+  .c-tr { top: 20px; right: 20px; border-top: 1px solid rgba(0,174,239,0.18); border-right: 1px solid rgba(0,174,239,0.18); }
+  .c-bl { bottom: 20px; left: 20px; border-bottom: 1px solid rgba(0,174,239,0.18); border-left: 1px solid rgba(0,174,239,0.18); }
+  .c-br { bottom: 20px; right: 20px; border-bottom: 1px solid rgba(0,174,239,0.18); border-right: 1px solid rgba(0,174,239,0.18); }
+
+  .back-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .back-v svg { width: 88px; height: 70px; }
+
+  .back-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: 0.48em;
+    color: rgba(238,244,255,0.5);
+    text-transform: uppercase;
+    margin-right: -0.48em;
+  }
+
+  .back-rule {
+    width: 36px;
+    height: 1px;
+    background: rgba(0,174,239,0.25);
+  }
+
+  .back-phones { display: none; } /* replaced by back-contact */
+
+  .back-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .back-divider {
+    width: 28px;
+    height: 1px;
+    background: rgba(0,174,239,0.18);
+    margin: 2px 0;
+  }
+
+  .back-phone {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bflag {
+    font-size: 13px;
+    line-height: 1;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .bicon {
+    font-size: 11px;
+    color: rgba(0,174,239,0.45);
+    width: 20px;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .bnum {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    color: rgba(238,244,255,0.62);
+  }
+
+  /* ── Κουμπιά ── */
+  .controls {
+    display: flex;
+    gap: 14px;
+  }
+
+  .btn {
+    background: transparent;
+    border: 1px solid rgba(0,150,200,0.22);
+    color: rgba(0,174,239,0.55);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 8px 22px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .btn:hover { border-color: rgba(0,174,239,0.5); color: rgba(0,174,239,0.9); }
+
+  .hint {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: rgba(100,140,170,0.25);
+    text-transform: uppercase;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .controls, .hint { display: none; }
+    .scene { width: 3.5in; height: 2in; perspective: none; margin: 0.2in auto; }
+    .card { transform: none !important; }
+    .face { position: relative; backface-visibility: visible; -webkit-backface-visibility: visible; }
+    .front { width: 3.5in; height: 2in; page-break-after: always; }
+    .back { transform: none; width: 3.5in; height: 2in; }
+  }
+</style>
+
+<script>
+  function scaleCard() {
+    const scene = document.querySelector('.scene');
+    const cardW = 900;
+    const cardH = 500;
+    const vw = Math.min(window.innerWidth - 24, cardW);
+    if (vw < cardW) {
+      const scale = vw / cardW;
+      scene.style.transform = `scale(${scale})`;
+      scene.style.transformOrigin = 'top center';
+      scene.style.marginBottom = `-${cardH * (1 - scale)}px`;
+    } else {
+      scene.style.transform = '';
+      scene.style.marginBottom = '';
+    }
+  }
+  window.addEventListener('load', scaleCard);
+  window.addEventListener('resize', scaleCard);
+</script>
+</head>
+<body>
+
+<div class="scene" id="cs" onclick="this.classList.toggle('flipped')">
+  <div class="card">
+
+    <!-- ══ ΜΠΡΟΣΤΑ ══ -->
+    <div class="face front">
+      <div class="front-line"></div>
+
+      <div class="v-mark">
+        <svg viewBox="0 0 26 20" fill="none">
+          <path d="M2 2 L13 18 L24 2" stroke="rgba(0,174,239,0.65)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="2"  cy="2" r="1.4" fill="rgba(0,174,239,0.55)"/>
+          <circle cx="24" cy="2" r="1.4" fill="rgba(0,174,239,0.55)"/>
+        </svg>
+      </div>
+
+      <!-- Όνομα + Ρόλοι — centered now that contact is gone -->
+      <div class="left-block">
+        <div class="dr">Dr.</div>
+        <div class="name">John Vourganas</div>
+        <div class="roles">
+          <div class="role role-1">AI Strategy &amp; Governance</div>
+          <div class="role role-2">Digital Transformation</div>
+          <div class="role role-3">Cybersecurity &amp; AI Research</div>
+        </div>
+      </div>
+
+      <div class="netrity">Netrity Ltd &nbsp;·&nbsp; UK &amp; Cyprus</div>
+    </div>
+
+    <!-- ══ ΠΙΣΩ ══ -->
+    <div class="face back">
+      <div class="back-line"></div>
+      <div class="corner c-tl"></div>
+      <div class="corner c-tr"></div>
+      <div class="corner c-bl"></div>
+      <div class="corner c-br"></div>
+
+      <div class="back-center">
+        <!-- V mark — μικρότερο τώρα -->
+        <div class="back-v">
+          <svg viewBox="0 0 88 70" fill="none">
+            <path d="M7 7 L44 63 L81 7"
+              stroke="rgba(0,174,239,0.82)" stroke-width="3.2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18 7 L44 52 L70 7"
+              stroke="rgba(0,174,239,0.15)" stroke-width="1.2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="7"  cy="7"  r="3.2" fill="rgba(0,174,239,0.75)"/>
+            <circle cx="81" cy="7"  r="3.2" fill="rgba(0,174,239,0.75)"/>
+            <circle cx="44" cy="63" r="2.5" fill="rgba(0,174,239,0.35)"/>
+          </svg>
+        </div>
+
+        <div class="back-name">Vourganas</div>
+
+        <div class="back-rule"></div>
+
+        <!-- Όλη η επικοινωνία πίσω -->
+        <div class="back-contact">
+          <div class="back-phone">
+            <span class="bflag">🇬🇧</span>
+            <span class="bnum">+44 7588 726 382</span>
+          </div>
+          <div class="back-phone">
+            <span class="bflag">🇨🇭</span>
+            <span class="bnum">+41 76 243 44 92</span>
+          </div>
+          <div class="back-phone">
+            <span class="bflag">🇬🇷</span>
+            <span class="bnum">+30 693 471 6660</span>
+          </div>
+          <div class="back-divider"></div>
+          <div class="back-phone">
+            <span class="bflag" style="font-size:11px; opacity:0.5; font-family:'Barlow Condensed',sans-serif; font-style:normal;">✉</span>
+            <span class="bnum">ijvourganas@netrity.co.uk</span>
+          </div>
+          <div class="back-phone">
+            <span class="bflag" style="font-size:11px; opacity:0.5; font-family:'Barlow Condensed',sans-serif; font-style:normal;">⊕</span>
+            <span class="bnum">vourganas.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="controls">
+  <button class="btn" onclick="document.getElementById('cs').classList.toggle('flipped')">Flip</button>
+  <button class="btn" id="dlBtn" onclick="downloadPDF()">⬇ Download PDF</button>
+</div>
+<p class="hint">Hover to flip &nbsp;·&nbsp; 3.5 × 2 in &nbsp;·&nbsp; 350gsm matte</p>
+
+<!-- html2pdf library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+async function downloadPDF() {
+  const btn = document.getElementById('dlBtn');
+  btn.textContent = '⏳ Please wait...';
+  btn.disabled = true;
+
+  // Temporarily render both faces flat for PDF capture
+  const front = document.querySelector('.front');
+  const back  = document.querySelector('.back');
+
+  // Clone front and back into a hidden print container
+  const container = document.createElement('div');
+  container.style.cssText = `
+    position: fixed; left: -9999px; top: 0;
+    width: 900px; background: #061524;
+  `;
+
+  const frontClone = front.cloneNode(true);
+  frontClone.style.cssText = `
+    position: relative; width: 900px; height: 500px;
+    border-radius: 12px; overflow: hidden;
+    background: #061524; margin-bottom: 20px;
+    page-break-after: always;
+  `;
+
+  const backClone = back.cloneNode(true);
+  backClone.style.cssText = `
+    position: relative; width: 900px; height: 500px;
+    border-radius: 12px; overflow: hidden;
+    background: #071828; transform: none;
+    display: flex; align-items: center; justify-content: center;
+  `;
+
+  container.appendChild(frontClone);
+  container.appendChild(backClone);
+  document.body.appendChild(container);
+
+  const opt = {
+    margin:      0,
+    filename:    'Vourganas_Card_EN.pdf',
+    image:       { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#061524' },
+    jsPDF:       { unit: 'px', format: [900, 1040], orientation: 'portrait' }
+  };
+
+  try {
+    await html2pdf().set(opt).from(container).save();
+  } finally {
+    document.body.removeChild(container);
+    btn.textContent = '⬇ Download PDF';
+    btn.disabled = false;
+  }
+}
+</script>
+
+</body>
+</html>
