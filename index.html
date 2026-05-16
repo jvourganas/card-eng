@@ -327,6 +327,13 @@
     color: rgba(238,244,255,0.62);
   }
 
+  .blink {
+    text-decoration: none;
+    color: rgba(238,244,255,0.62);
+    transition: color 0.2s;
+  }
+  .blink:hover { color: rgba(0,174,239,0.9); }
+
   /* ── Κουμπιά ── */
   .controls {
     display: flex;
@@ -464,11 +471,11 @@
           <div class="back-divider"></div>
           <div class="back-phone">
             <span class="bflag" style="font-size:11px; opacity:0.5; font-family:'Barlow Condensed',sans-serif; font-style:normal;">✉</span>
-            <span class="bnum">ijvourganas@netrity.co.uk</span>
+            <a class="bnum blink" href="mailto:ijvourganas@netrity.co.uk">ijvourganas@netrity.co.uk</a>
           </div>
           <div class="back-phone">
             <span class="bflag" style="font-size:11px; opacity:0.5; font-family:'Barlow Condensed',sans-serif; font-style:normal;">⊕</span>
-            <span class="bnum">vourganas.com</span>
+            <a class="bnum blink" href="https://www.vourganas.com" target="_blank">vourganas.com</a>
           </div>
         </div>
       </div>
